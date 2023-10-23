@@ -70,14 +70,15 @@ const User = require('./models/User');
 // Segun esto, empezará a enviar los datos a la direccion /sensor
 app.post('/sensor', async (req, res) => {
   try {
-    const { altura, temperatura, genero, edad, codigo } = req.body.sensores[0]; 
+    const { altura, temperatura, genero, edad, codigo, peso } = req.body.sensores[0]; 
     console.log('Datos recibidos del cliente:');
     console.log('Altura: ', altura);
     console.log('Temperatura: ', temperatura);
     console.log('Genero: ', genero);
     console.log('Edad: ', edad);
     console.log('Codigo: ', codigo);
-    const sensor = new SensoresModel({ temperatura, altura, genero, edad, codigo });
+    console.log('Peso: ', peso);
+    const sensor = new SensoresModel({ temperatura, altura, genero, edad, codigo, peso });
     await sensor.save();
 
 
