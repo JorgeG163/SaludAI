@@ -265,6 +265,7 @@ app.get("/descargar-excel", async (req, res) => {
       doc.font('Helvetica').fontSize(12).text(`Temperatura: ${ultimoDato.temperatura} °C`);
       doc.font('Helvetica').fontSize(12).text(`Género: ${ultimoDato.genero}`);
       doc.font('Helvetica').fontSize(12).text(`Edad: ${ultimoDato.edad} años`);
+      doc.font('Helvetica').fontSize(12).text(`Peso: ${ultimoDato.peso} Kg`);
       doc.moveDown();
       doc.font('Helvetica-Bold').fontSize(14).text('Conclusiones y Recomendaciones:', { underline: true });
       doc.moveDown();
