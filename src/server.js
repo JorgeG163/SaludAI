@@ -94,7 +94,7 @@ app.post('/sensor', async (req, res) => {
 
 // Maneja la solicitud GET a la URL /sensores y renderiza la página "sensor.hbs" con los datos de la base de datos
 // Ruta para manejar solicitudes GET a '/sensores'
-app.get('/sensores', async (req, res) => {
+app.get('/resultados', async (req, res) => {
   try {
     const latestsensor = await SensoresModel.findOne({ 
       altura: { $ne: null },
