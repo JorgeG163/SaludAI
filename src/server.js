@@ -136,7 +136,8 @@ app.get("/descargar-excel", async (req, res) => {
       temperatura: { $ne: null },
       genero: { $ne: null },
       edad: { $ne: null },
-      codigo: codigoUsuario
+      codigo: codigoUsuario,
+      peso : { $ne: null }
     }, {}, {});
 
     if (actualsensor) {
@@ -192,6 +193,7 @@ app.get("/descargar-excel", async (req, res) => {
     ws.cell(i + 3, 1).number(registro.edad).style(EstiloContenido);
     ws.cell(i + 3, 2).number(registro.altura).style(EstiloContenido);
     ws.cell(i + 3, 4).number(registro.temperatura).style(EstiloContenido);
+    ws.cell(i + 3, 3).number(registro.peso).style(EstiloContenido);
   }
       
   //Ruta del archivo
