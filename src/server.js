@@ -94,7 +94,7 @@ app.post('/sensor', async (req, res) => {
 
 // Maneja la solicitud GET a la URL /sensores y renderiza la página "sensor.hbs" con los datos de la base de datos
 // Ruta para manejar solicitudes GET a '/sensores'
-app.get('/resultados', async (req, res) => {
+app.get('/sensores', async (req, res) => {
   try {
     const latestsensor = await SensoresModel.findOne({ 
       altura: { $ne: null },
@@ -237,6 +237,11 @@ app.get("/descargar-excel", async (req, res) => {
     if (ultimosDatos.length > 0) {
       const ultimoDato = ultimosDatos[0];
 
+      const alturaEnCentimetros = ultimoDato.altura;
+      const alturaEnMetros = alturaEnCentimetros/100;
+      const peso = ultimoDato.peso;
+      const imc = (peso / (alturaEnMetros * alturaEnMetros)); // Ajustar para centímetros
+
       // Crear un nuevo documento PDF
       const doc = new PDFDocument();
 
@@ -269,7 +274,16 @@ app.get("/descargar-excel", async (req, res) => {
       doc.moveDown();
       doc.font('Helvetica-Bold').fontSize(14).text('Conclusiones y Recomendaciones:', { underline: true });
       doc.moveDown();
-      doc.font('Helvetica').fontSize(12).text('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget ligula nec odio facilisis ultrices. Nulla facilisi. Sed luctus nisi non ligula posuere, vitae fermentum turpis viverra.');
+      doc.font('Helvetica').fontSize(12).text(`IMC: ${imc.toFixed(2)}`);
+      doc.moveDown();
+      if (imc < 18.5){
+        doc.font('Helvetica').fontSize(12).text(`Su indice de masa corporal es insuficiente, ir a nutricionista`);
+      }
+      else if (imc > 18.5 && imc < 25){
+        doc.font('Helvetica').fontSize(12).text(`Su indice de masa corporal es normas`);
+      }else{
+        doc.font('Helvetica').fontSize(12).text(`Su indice de masa es alto, ir a nutricionista`);
+      }
 
       // Finalizar el PDF
       doc.end();
